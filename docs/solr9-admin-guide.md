@@ -313,3 +313,8 @@ headroom for a second copy of the core.
 - [tracker-admin-endpoints.md](tracker-admin-endpoints.md) — reports & reindex REST API reference.
 - [tracker-configuration.md](tracker-configuration.md) — full tracker tuning reference.
 - [solr6-to-solr9-migration.md](solr6-to-solr9-migration.md) — technical migration details.
+
+
+## Index consistency scans
+
+Use the tracker service consistency API when an administrator needs detailed IDs rather than the aggregate counts returned by `REPORT`. The asynchronous scanner supports DBID, transaction, commit-time and full scans and schedules repair through the existing tracker queues. See [consistency-scan-guide.md](consistency-scan-guide.md).

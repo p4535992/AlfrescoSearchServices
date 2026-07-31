@@ -1099,6 +1099,60 @@ public class MetadataTracker extends ActivatableTracker
         return checkNode(node.getId());
     }
 
+    /**
+     * Fetches repository nodes in a DBID range using the same repository client and
+     * store/core filters as the metadata tracker. Intended for consistency scans.
+     */
+    public List<Node> getRepositoryNodes(Long fromNodeId, Long toNodeId, int maxResults)
+    {
+        try
+        {
+            GetNodesParameters parameters = new GetNodesParameters();
+            parameters.setFromNodeId(fromNodeId);
+            parameters.setToNodeId(toNodeId);
+            parameters.setStoreProtocol(storeRef.getProtocol());
+            parameters.setStoreIdentifier(storeRef.getIdentifier());
+            parameters.setCoreName(coreName);
+            return client.getNodes(parameters, maxResults);
+        }
+        catch (IOException | AuthenticationException | JSONException e)
+        {
+            throw new AlfrescoRuntimeException("Failed to get repository nodes", e);
+        }
+    }
+
+    /** Fetches repository transactions for an explicit range. */
+    public Transactions getRepositoryTransactions(Long fromCommitTime, Long minTxnId,
+            Long toCommitTime, Long maxTxnId, int maxResults)
+    {
+        try
+        {
+            return client.getTransactions(fromCommitTime, minTxnId, toCommitTime, maxTxnId, maxResults);
+        }
+        catch (IOException | AuthenticationException | JSONException e)
+        {
+            throw new AlfrescoRuntimeException("Failed to get repository transactions", e);
+        }
+    }
+
+    /** Fetches all repository nodes belonging to the supplied transactions. */
+    public List<Node> getRepositoryNodesForTransactions(List<Long> transactionIds, int maxResults)
+    {
+        try
+        {
+            GetNodesParameters parameters = new GetNodesParameters();
+            parameters.setTransactionIds(transactionIds);
+            parameters.setStoreProtocol(storeRef.getProtocol());
+            parameters.setStoreIdentifier(storeRef.getIdentifier());
+            parameters.setCoreName(coreName);
+            return client.getNodes(parameters, maxResults);
+        }
+        catch (IOException | AuthenticationException | JSONException e)
+        {
+            throw new AlfrescoRuntimeException("Failed to get nodes for repository transactions", e);
+        }
+    }
+
     public List<Node> getFullNodesForDbTransaction(Long txid)
     {
         try

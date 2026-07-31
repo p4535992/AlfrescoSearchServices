@@ -638,6 +638,20 @@ public class AclTracker extends ActivatableTracker
         return this.infoSrv.reportAclTransactionsInIndex(minAclTxId, aclTxIdsInDb, maxAclTxId);
     }
 
+    /** Fetches repository ACL change sets for consistency scans. */
+    public AclChangeSets getRepositoryAclChangeSets(Long fromCommitTime, Long minAclTxId,
+            Long toCommitTime, Long maxAclTxId, int maxResults)
+    {
+        try
+        {
+            return client.getAclChangeSets(fromCommitTime, minAclTxId, toCommitTime, maxAclTxId, maxResults);
+        }
+        catch (IOException | JSONException | AuthenticationException e)
+        {
+            throw new AlfrescoRuntimeException("Failed to get repository ACL change sets", e);
+        }
+    }
+
     public List<Long> getAclsForDbAclTransaction(Long acltxid)
     {
         try

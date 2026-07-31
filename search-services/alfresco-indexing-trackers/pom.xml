@@ -168,6 +168,7 @@
                             <exclude>**/org/alfresco/indexing/admin/AdminController.java</exclude>
                             <exclude>**/org/alfresco/indexing/admin/AdminService.java</exclude>
                             <exclude>**/org/alfresco/indexing/admin/SolrCompatAdminController.java</exclude>
+                            <exclude>**/org/alfresco/indexing/consistency/**/*.java</exclude>
                             <exclude>**/org/alfresco/indexing/config/RepairReportEndpoint.java</exclude>
                             <exclude>**/org/alfresco/indexing/config/RepositoryClientConfig.java</exclude>
                             <exclude>**/org/alfresco/indexing/config/SolrJConfig.java</exclude>
@@ -238,6 +239,7 @@
                             <include>**/org/alfresco/indexing/admin/AdminController.java</include>
                             <include>**/org/alfresco/indexing/admin/AdminService.java</include>
                             <include>**/org/alfresco/indexing/admin/SolrCompatAdminController.java</include>
+                            <include>**/org/alfresco/indexing/consistency/**/*.java</include>
                             <include>**/org/alfresco/indexing/config/RepairReportEndpoint.java</include>
                             <include>**/org/alfresco/indexing/config/RepositoryClientConfig.java</include>
                             <include>**/org/alfresco/indexing/config/SolrJConfig.java</include>

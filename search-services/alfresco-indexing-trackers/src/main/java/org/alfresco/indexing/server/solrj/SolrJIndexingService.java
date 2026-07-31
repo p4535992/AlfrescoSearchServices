@@ -335,6 +335,17 @@ public class SolrJIndexingService
             catch (Exception e)
             {
                 LOGGER.warn("Failed to index node {} — skipping: {}", node.getId(), e.getMessage(), e);
+                try
+                {
+                    // Keep failures queryable by RepairTracker and consistency scans whenever
+                    // an existing node document can accept the atomic error marker.
+                    markIndexingError(node.getId(), node.getTenant());
+                }
+                catch (Exception markerError)
+                {
+                    LOGGER.warn("Unable to persist the indexing-error marker for node {}: {}",
+                            node.getId(), markerError.getMessage());
+                }
             }
         }
     }

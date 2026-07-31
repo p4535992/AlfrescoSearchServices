@@ -258,3 +258,17 @@ No `cores` block is shipped: both `alfresco` and `archive` track the correct
 store by convention, and every core inherits the global tuning above. Add a
 `cores.archive.*` section only when you want the `archive` core tracked
 differently (see [Per-core configuration & store selection](#per-core-configuration--store-selection)).
+
+
+## Consistency scanner
+
+| Property | Default | Description |
+|---|---:|---|
+| `alfresco.tracker.consistency.enabled` | `true` | Enables the consistency scan API. |
+| `alfresco.tracker.consistency.storage-path` | temporary directory | Persistent JSON/JSONL scan storage. |
+| `alfresco.tracker.consistency.retention-days` | `30` | Retention for completed scans. |
+| `alfresco.tracker.consistency.max-concurrent-scans` | `1` | Maximum active scans. |
+| `alfresco.tracker.consistency.batch-size` | `500` | Repository and Solr batch size. |
+| `alfresco.tracker.consistency.result-page-size-max` | `5000` | Maximum findings page size. |
+| `alfresco.tracker.consistency.max-results` | `1000000` | Maximum processed scope and persisted findings per scan. |
+| `alfresco.tracker.consistency.worker-threads` | `2` | Worker pool size, capped by `max-concurrent-scans`. |

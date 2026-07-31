@@ -114,15 +114,14 @@ curl -s "http://localhost:8085/actuator/repairreport" | python3 -m json.tool
 [tracker-configuration.md](tracker-configuration.md) for the repair cron and
 `repair-max-retries`.
 
-> **Known limitation.** A node the repository reports as *unindexable* — e.g. a
-> node whose type was removed from a content model
-> (`… type {…}documentMarche … is not registered in DictionaryService`) — is
-> currently **skipped with a WARN log only** (`SolrJIndexingService.indexNodes`),
-> **not** recorded as an error node. Such nodes therefore do **not** appear in
-> `report`/`repairreport` and are **not** picked up by `retry`; the only trace is
-> the `Failed to index node <id> — skipping` line in the trackers log. Reindexing
-> them explicitly will keep failing until the model/data is fixed (re-add the type
-> as deprecated, or delete the orphaned nodes in the repository).
+> **Unindexable nodes.** When node indexing fails, the tracker now attempts to
+> persist `HAS_INDEXING_ERROR` on an existing node document so RepairTracker and
+> consistency scans can report it. If no node document exists yet, the atomic
+> marker may not be persistable; an authoritative `NODE_ID`, transaction-range or
+> `FULL` consistency scan will still report the repository node as missing. Model
+> errors remain a manual data/model repair: retrying will continue to fail until
+> the missing type or model is restored, deprecated, or the orphaned repository
+> data is removed.
 
 ## Common recipes
 
@@ -145,3 +144,8 @@ curl -s -X POST "http://localhost:8085/api/admin/retry?core=alfresco"
 
 - [solr9-admin-guide.md](solr9-admin-guide.md) — administrator overview of the Solr 9 search tier.
 - [tracker-configuration.md](tracker-configuration.md) — tracker tuning, per-core overrides, repair cron.
+
+
+## Consistency scans
+
+The tracker service exposes asynchronous detailed consistency scans under `/api/admin/consistency-scans`. They complement the aggregate `REPORT` action by returning the affected node, transaction and ACL IDs. See [consistency-scan-guide.md](consistency-scan-guide.md) for requests, exports, dry-run repair and migration from the external inspector script.

@@ -37,6 +37,15 @@ alfresco:
     health:
       connect-timeout: 5000   # ms — repository health probe (/actuator/health)
       read-timeout: 5000      # ms
+    consistency:
+      enabled: true
+      storage-path: ${CONSISTENCY_STORAGE_PATH:/tmp/alfresco-indexing-trackers/consistency}
+      retention-days: 30
+      max-concurrent-scans: 1
+      batch-size: 500
+      result-page-size-max: 5000
+      max-results: 1000000
+      worker-threads: 2
 
 server:
   port: 8085

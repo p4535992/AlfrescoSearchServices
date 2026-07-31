@@ -28,3 +28,5 @@ Edition and, more specifically, on this search module.
 > This is an independent community project, **not affiliated with Hyland**, and it
 > is **not** supported on Alfresco Enterprise. See the
 > [project README](../README.md) for the full status and disclaimer.
+
+- [Consistency scan guide](consistency-scan-guide.md) — asynchronous repository/index audit and repair.

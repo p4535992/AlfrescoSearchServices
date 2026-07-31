@@ -27,6 +27,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import org.alfresco.indexing.config.TrackerProperties;
+import org.alfresco.indexing.consistency.ConsistencyProperties;
 
 /**
  * Spring Boot entry point for the Alfresco Indexing Trackers standalone service.
@@ -34,7 +35,7 @@ import org.alfresco.indexing.config.TrackerProperties;
 @SpringBootApplication(exclude = {
     org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration.class
 })
-@EnableConfigurationProperties(TrackerProperties.class)
+@EnableConfigurationProperties({TrackerProperties.class, ConsistencyProperties.class})
 public class TrackerApplication
 {
     public static void main(String[] args)
